@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-web
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devops-web
+  template:
+    metadata:
+      labels:
+        app: devops-web
+    spec:
+      containers:
+        - name: devops-web
+          image: gopala1612/devops-web:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
