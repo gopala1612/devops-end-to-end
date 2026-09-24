@@ -1,0 +1,195 @@
+    1  cd /etc/netplan
+    2  vi 50-cloud-init.yaml 
+    3  ip r
+    4  servuce network restart
+    5  ifup ens
+    6  service network restart
+    7  ip a
+    8  sytemctl status ssh
+    9  systemctl status ssh
+   10  systemctl status openssh-server
+   11  apt_get update
+   12  systemctl status openssh-server
+   13  systemctl status ssh
+   14  apt install openssh-server -y
+   15  systemctl status ssh
+   16  ip r
+   17  cd /etc/netplan
+   18  ls
+   19  vi 50-cloud-init.yaml 
+   20  sudo netplan generate
+   21  sudo netplan try
+   22  ip r
+   23  reboot
+   24  df -u
+   25  df -hu
+   26  df -h
+   27  du -h
+   28  du -u
+   29  du -h
+   30  df -h
+   31  df -hT
+   32  du -s
+   33  du -c
+   34  cd /etc/host
+   35  pwd
+   36  cd /etc
+   37  ls
+   38  cd /hosts
+   39  cd hosts
+   40  vi hosts
+   41  cp   hosts hosts-bckup
+   42  ls
+   43  vi hosts
+   44  ping 192.168.227.132
+   45  hostname
+   46  ip addr show ens33
+   47  ip route
+   48  cd ..
+   49  cd /etc/netplan/
+   50  cat 50-cloud-init.yaml 
+   51  vi  50-cloud-init.yaml 
+   52  sudo netplan generate
+   53  sudo netplan try
+   54  sudo netplan apply
+   55  ip addr show ens33
+   56  cat 50-cloud-init.yaml 
+   57  vi 50-cloud-init.yaml 
+   58  sudo netplan generate
+   59  sudo netplan try
+   60  sudo netplan apply
+   61  cat 50-cloud-init.yaml 
+   62  cd ..
+   63  ll
+   64  ls
+   65  vi hosts
+   66  ping -c 2 devops-worker1
+   67  sudo systemctl status ssh --no-pager
+   68  ssh gopala@devops-worker1
+   69  ssh gopala@devops-worker2
+   70  whoami
+   71  vmstat
+   72  htop
+   73  swap
+   74  free -h
+   75  top
+   76  df -h
+   77  ls
+   78  pwd
+   79  cat /etc/netplan/*.yaml
+   80  hostnamectl
+   81  ip addr show ens33
+   82  ip route
+   83  ls -l /etc/netplan/
+   84  cat /etc/netplan/*.yaml
+   85  hostnamectl
+   86  sudo hostnamectl set-hostname devops-master
+   87  hostnamectl set-hostname devops-master
+   88  ls
+   89  sudo -i
+   90  hostnamectl set-hostname devops-master
+   91  bash
+   92  ls
+   93  cd home
+   94  cd /home
+   95  ls
+   96  cd gopala/
+   97  ls
+   98  cd devops-end-to-end/
+   99  ls
+  100  docker info | grep -i username
+  101  mkdir -p app
+  102  ls
+  103  cd app/
+  104  ls
+  105  vi index.html
+  106  cd /home/gopala/devops-end-to-end/ansible/
+  107  ls
+  108  kubeadm reset -f
+  109  rm -rf /etc/cni/net.d
+  110  rm -rf /var/lib/cni/
+  111  systemctl restart containerd
+  112  systemctl restart kubelet
+  113  kubectl get nodes
+  114  systemctl status kubelet --no-pager
+  115  ls -la /etc/cni/net.d/
+  116  systemctl status containerd --no-pager
+  117  kubectl get nodes
+  118  kubeadm init   --apiserver-advertise-address=192.168.227.131   --pod-network-cidr=10.244.0.0/16
+  119  modprobe br_netfilter
+  120  lsmod | grep br_netfilter
+  121  sysctl -w net.bridge.bridge-nf-call-iptables=1
+  122  sysctl -w net.bridge.bridge-nf-call-ip6tables=1
+  123  sysctl -w net.ipv4.ip_forward=1
+  124  cat <<EOF >/etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+
+  125  sysctl --system
+  126  kubeadm init   --apiserver-advertise-address=192.168.227.131   --pod-network-cidr=10.244.0.0/16
+  127  export KUBECONFIG=/etc/kubernetes/admin.conf
+  128  kubectl get nodes
+  129  kubectl cluster-info
+  130  kubectl get pods -A
+  131  kubectl get pods -A -w
+  132  kubectl get pods -A
+  133  kubectl get pods -A -w
+  134  kubectl get pods -A
+  135  cd /tmp
+  136  curl -O https://raw.githubusercontent.com/projectcalico/calico/v3.28.2/manifests/calico.yaml
+  137  grep -n "CALICO_IPV4POOL_CIDR" calico.yaml
+  138  sed -i 's/# - name: CALICO_IPV4POOL_CIDR/- name: CALICO_IPV4POOL_CIDR/' calico.yaml
+  139  sed -i '/- name: CALICO_IPV4POOL_CIDR/{n;s/# value: "192.168.0.0\/16"/value: "10.244.0.0\/16"/;}' calico.yaml
+  140  grep -A1 "CALICO_IPV4POOL_CIDR" calico.yaml
+  141  kubectl apply -f /tmp/calico.yaml
+  142  kubectl get pods -n kube-system
+  143  kubectl get pods -n kube-system -w
+  144  kubectl get pods -n kube-system
+  145  kubectl get nodes
+  146  mkdir -p $HOME/.kube
+  147  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  148  kubectl get nodes
+  149  kubectl get pods -n kube-system -o wide
+  150  kubectl get nodes
+  151  kubectl get nodes -o wide
+  152  kubectl get pods -n kube-system -o wide
+  153  kubectl get nodes
+  154  kubectl create deployment nginx-test --image=nginx:alpine --replicas=3
+  155  kubectl get pods -o wide
+  156  docker imageghgyyyttt
+  157  \\\
+  158  \\
+  159  docker images
+  160  kubectl get pods -o wide
+  161  kubectl delete deployment nginx-test
+  162  kubectl get pods
+  163  cd /home/gopala/devops-end-to-end
+  164  cat k8s/deployment.yaml
+  165  kubectl apply -f k8s/deployment.yaml
+  166  kubectl get deployment
+  167  kubectl get pods -o wide
+  168  kubectl describe deployment devops-web
+  169  kubectl logs -l app=devops-web
+  170  kubectl get deployment
+  171  kubectl get pods -o wide
+  172  cat > k8s/service.yaml <<'EOF'
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-web
+  namespace: default
+spec:
+  selector:
+    app: devops-web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
+EOF
+
+  173  kubectl apply -f k8s/service.yaml
+  174  kubectl get svc -o wide
+  175  kubectl get svc devops-web
+  176  history >> history.txt
