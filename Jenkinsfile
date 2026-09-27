@@ -49,11 +49,27 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh '''
+                    echo "Deploying application to Kubernetes..."
+
+                    kubectl apply -f k8s/deployment.yaml
+                    kubectl apply -f k8s/service.yaml
+
+                    kubectl rollout status deployment/devops-web
+
+                    kubectl get pods -o wide
+                    kubectl get svc devops-web
+                '''
+            }
+        }
     }
 
     post {
         success {
-            echo '✅ Build and Docker Hub push completed successfully!'
+            echo '✅ Docker build, Docker Hub push and Kubernetes deployment completed successfully!'
         }
 
         failure {
