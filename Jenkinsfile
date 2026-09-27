@@ -49,20 +49,24 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy to Kubernetes') {
+        stage('Deploy to Kubernetes with Helm') {
             steps {
                 sh '''
-                    echo "Deploying application to Kubernetes..."
-
-                    kubectl apply -f k8s/deployment.yaml
-                    kubectl apply -f k8s/service.yaml
-                    kubectl apply -f k8s/ingress.yaml
-     
-                    kubectl rollout status deployment/devops-web
-
+                    echo "Deploying application to Kubernetes using Helm..."
+        
+                    helm upgrade --install devops-web-helm ./helm/devops-web \
+                      --namespace default \
+                      --create-namespace
+        
+                    kubectl rollout status deployment/devops-web-helm-devops-web
+        
+                    echo "Helm release status:"
+                    helm status devops-web-helm
+        
+                    echo "Kubernetes resources:"
                     kubectl get pods -o wide
-                    kubectl get svc devops-web
+                    kubectl get svc
+                    kubectl get ingress
                 '''
             }
         }
@@ -70,7 +74,7 @@ pipeline {
 
     post {
         success {
-            echo '✅ Docker build, Docker Hub push and Kubernetes deployment completed successfully!'
+            echo '✅ Docker build, Docker Hub push and Helm-based Kubernetes deployment completed successfully!'
         }
 
         failure {
@@ -78,3 +82,4 @@ pipeline {
         }
     }
 }
+
