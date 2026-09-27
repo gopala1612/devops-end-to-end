@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE = 'gopala1612/devops-web:v1'
+    }
+
     stages {
 
         stage('Checkout') {
@@ -18,28 +22,42 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh '''
-                    docker build -t gopala1612/devops-web:v1 .
-                '''
+                sh 'docker build -t $DOCKER_IMAGE .'
             }
         }
 
         stage('Docker Image Check') {
             steps {
-                sh '''
-                    docker images | grep gopala1612/devops-web
-                '''
+                sh 'docker images | grep gopala1612/devops-web'
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DOCKER_USERNAME',
+                        passwordVariable: 'DOCKER_PASSWORD'
+                    )
+                ]) {
+                    sh '''
+                        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+                        docker push $DOCKER_IMAGE
+                        docker logout
+                    '''
+                }
             }
         }
     }
 
     post {
         success {
-            echo '✅ Jenkins pipeline completed successfully!'
+            echo '✅ Build and Docker Hub push completed successfully!'
         }
 
         failure {
-            echo '❌ Jenkins pipeline failed. Check the console output.'
+            echo '❌ Pipeline failed. Check the console output.'
         }
     }
 }
