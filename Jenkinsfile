@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'gopala1612/devops-web:${BUILD_NUMBER}'
+        DOCKER_IMAGE = "gopala1612/devops-web:${BUILD_NUMBER}"
     }
 
     stages {
