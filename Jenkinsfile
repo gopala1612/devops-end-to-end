@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'gopala1612/devops-web:v1'
+        DOCKER_IMAGE = 'gopala1612/devops-web:${BUILD_NUMBER}'
     }
 
     stages {
@@ -49,14 +49,15 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Kubernetes with Helm') {
+		stage('Deploy to Kubernetes with Helm') {
             steps {
                 sh '''
                     echo "Deploying application to Kubernetes using Helm..."
         
                     helm upgrade --install devops-web-helm ./helm/devops-web \
                       --namespace default \
-                      --create-namespace
+                      --create-namespace \
+                      --set image.tag=${BUILD_NUMBER}
         
                     kubectl rollout status deployment/devops-web-helm-devops-web
         
