@@ -1,0 +1,21 @@
+replicaCount: 2
+
+image:
+  repository: gopala1612/devops-web
+  tag: v1
+  pullPolicy: Always
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 80
+  nodePort: 32322
+
+ingress:
+  enabled: true
+  className: nginx
+  host: devops-helm.local
+  path: /
+  pathType: Prefix
+
+resources: {}
